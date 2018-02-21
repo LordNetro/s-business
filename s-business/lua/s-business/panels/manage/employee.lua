@@ -201,7 +201,8 @@ function SA.Business:ManageEmployees( strBusiness )
 			net.SendToServer()
 		end
 	end
-
+	
+	local Emp = ""
 	local Employee = vgui.Create( "DComboBox", SA.Business.Bg )
 	Employee:SetSize( SA.Business.Bg:GetWide(), 25 )
 	Employee:SetPos( 0, SA.Business.Bg:GetTall() - 125 )
@@ -212,7 +213,10 @@ function SA.Business:ManageEmployees( strBusiness )
 		
 		Employee:AddChoice( v:Nick(), v )
 	end
-
+	Employee.OnSelect = function( index, value, data )
+		Emp = Employee:GetOptionData( value )
+	end
+	
 	local ESalary = vgui.Create( "DTextEntry", SA.Business.Bg )
 	ESalary:SetSize( SA.Business.Bg:GetWide(), 25 )
 	ESalary:SetPos( 0, SA.Business.Bg:GetTall() - 95 )
@@ -247,7 +251,7 @@ function SA.Business:ManageEmployees( strBusiness )
 		net.WriteString( "AddEmployee" )
 		net.WriteTable( {
 			Business = strBusiness,
-			Employee = Employee:GetOptionData( 1 ),
+			Employee = Emp,
 			Perms = SA.Business.Perms,
 			Salary = ESalary:GetValue() 
 		} )
