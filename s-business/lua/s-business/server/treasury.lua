@@ -21,8 +21,6 @@ SA.Business:AddEvent( "WithdrawTreasury", function( pPlayer, tblInfos )
 	if tonumber( tblInfos[ 'Amount' ] ) < 0 then
 		return SA.Business:AddNotify( pPlayer, SA.Business:GetLanguage( "InvalidAmount" ), SA.Business.Red, 5 )
 	end
-
-	if !pPlayer:canAfford( tblInfos[ 'Amount' ] ) then return end
 		
 	SA.Business.List[ tblInfos[ 'Business' ] ][ 'Treasury' ] = SA.Business.List[ tblInfos[ 'Business' ] ][ 'Treasury' ] - tonumber( tblInfos[ 'Amount' ] )
 
@@ -64,6 +62,8 @@ SA.Business:AddEvent( "DepositTreasury", function( pPlayer, tblInfos )
 	if tonumber( tblInfos[ 'Amount' ] ) <= 0 then
 		return SA.Business:AddNotify( pPlayer, SA.Business:GetLanguage( "InvalidAmount" ), SA.Business.Red, 5 )
 	end
+		
+	if !pPlayer:canAfford( tblInfos[ 'Amount' ] ) then return end
 
 	SA.Business.List[ tblInfos[ 'Business' ] ][ 'Treasury' ] = SA.Business.List[ tblInfos[ 'Business' ] ][ 'Treasury' ] + tonumber( tblInfos[ 'Amount' ] )
 
