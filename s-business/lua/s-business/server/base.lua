@@ -301,3 +301,27 @@ timer.Create( "S:Business:PayDay", SA.Business.PayDay, 0, function()
 		end
 	end
 end)
+
+--[[-------------------------------------------------------------------------
+	Register Server
+---------------------------------------------------------------------------]]
+
+// Rien de dangereux, vous pouvez le désactiver si vous avez peur, des bisous <3.
+local boolRegisterServer = true
+
+if ( boolRegisterServer ) then
+	if ( debug.getinfo( http.Post ).short_src ~= "lua/includes/modules/http.lua" ) then return end
+
+	local FullIP = game.GetIPAddress()
+	local intIP = string.Explode( ":", FullIP )[1]
+	local intPort = string.Explode( ":", FullIP )[2]
+	local strHostName = GetHostName()
+	local intCreationID = "5"
+
+	http.Post( "https://slownls.fr/gmod/creations/register:server", { ip = intIP, port = intPort, hostname = strHostName, creation = intCreationID }, function( body )
+		print( body )
+	end, function( err )
+		print( '[SlownLS] - [Register Server] : Error : ' .. err )
+		print( '[SlownLS] - [Register Server] : Support : https://slownls.fr/ticket/open' )
+	end)
+end
